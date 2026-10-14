@@ -1,0 +1,74 @@
+{
+  "release": "github-handoff-preview-2",
+  "date": "2026-10-14",
+  "application_version": "0.5.0",
+  "schema_revision": "0007_portable_workers",
+  "scope": "Local packaging and selected regression verification; no cloud mutations",
+  "checks": [
+    {
+      "name": "Selected Python installer, UI, profile, fixture, connection, discovery, capacity, metadata and property regressions",
+      "passed": 288,
+      "skipped": 18,
+      "skip_reason": "Linux-root and local PostgreSQL requirements",
+      "warnings": "Two dependency deprecation warnings"
+    },
+    {
+      "name": "Handoff tamper, credential-pattern, nested-archive, link and source-builder checks",
+      "passed": 6,
+      "deselected": 29,
+      "note": "Includes one source-builder test already present in the broader suite; do not add counts as distinct tests"
+    },
+    {
+      "name": "Portable UI offline DOM workflow",
+      "assertions_passed": 14,
+      "browser_rendering": false
+    },
+    {
+      "name": "Legacy discovery browser asset syntax after UTF-8 normalization",
+      "result": "passed"
+    },
+    {
+      "name": "Five example configuration files",
+      "result": "Validated using synthetic placeholder replacements; examples intentionally invalid until configured"
+    },
+    {
+      "name": "Operator-facing Markdown links",
+      "files_checked": 21,
+      "local_links_checked": 44,
+      "result": "passed"
+    },
+    {
+      "name": "Source TAR",
+      "result": "All SOURCE_MANIFEST member hashes verified"
+    },
+    {
+      "name": "Python wheel",
+      "result": "Built locally; all 102 application/resource files compared byte-for-byte to distributed source"
+    },
+    {
+      "name": "Distribution scan",
+      "result": "Recursive TAR/wheel scan for selected credential patterns and forbidden paths passed; not a comprehensive security audit"
+    },
+    {
+      "name": "Operator-facing guides and examples",
+      "result": "Checked for original workstation paths and known lab identifiers; no matches"
+    }
+  ],
+  "packaging_changes": [
+    "Curated deployment, IAM, operations, performance, compatibility, FAQ and maintainer documentation",
+    "Reconciled copied technical reference and generated foundation guide wording",
+    "Normalized text line endings for Git and converted a legacy CP1252 browser asset to UTF-8",
+    "Added distribution verification/sealing utilities and selected regression tests"
+  ],
+  "not_performed": [
+    "Fresh dependency download/install on a clean recipient workstation",
+    "Runtime container build from this final handoff snapshot",
+    "Fresh OCI/AWS stack application or workload IAM validation",
+    "Fresh host bootstrap, portable UI visual acceptance, dispatch or reboot",
+    "Real OCI managed certificate issuance or renewal",
+    "New cloud migration, private interconnect qualification or production scale testing"
+  ],
+  "credentials_included": false,
+  "runtime_image_included": false,
+  "production_ready": false
+}

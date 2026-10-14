@@ -1,0 +1,24 @@
+# Resolved on Windows / CPython 3.12; validate Linux image before deployment.
+alembic==1.19.2
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.15.1
+click==8.5.0
+fastapi==0.141.1
+greenlet==3.5.5
+h11==0.16.0
+idna==3.19
+mako==1.4.1
+markupsafe==3.0.3
+psycopg==3.3.5
+psycopg-binary==3.3.5
+pydantic==2.13.5
+pydantic-core==2.46.5
+pydantic-settings==2.15.0
+python-dotenv==1.2.3
+sqlalchemy==2.0.52
+starlette==1.6.0
+typing-extensions==4.16.0
+typing-inspection==0.4.4
+tzdata==2026.3
+uvicorn==0.52.4

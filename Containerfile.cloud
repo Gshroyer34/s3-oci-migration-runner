@@ -1,0 +1,12 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+USER root
+COPY requirements-cloud.lock requirements.lock ./
+RUN python -m pip install --no-cache-dir -r requirements-cloud.lock && python -m pip check
+COPY deploy/fetch_helper.py /tmp/fetch_helper.py
+RUN python /tmp/fetch_helper.py && rm /tmp/fetch_helper.py && aws_signing_helper version
+COPY src ./src
+COPY deploy ./deploy
+COPY scripts/lab_pki.py scripts/assemble_runtime_secret.py scripts/enroll_cloud_worker.py ./scripts/
+USER 10001
+CMD ["python", "-m", "migration_runner.runtime", "validate-node"]

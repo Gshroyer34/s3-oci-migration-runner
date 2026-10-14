@@ -1,0 +1,4 @@
+[
+  {"node_id": "coordinator", "instance_id": "REPLACE_COORDINATOR_INSTANCE_OCID", "private_ip": "REPLACE_COORDINATOR_PRIVATE_IP", "secret_id": "REPLACE_COORDINATOR_SECRET_OCID"},
+  {"node_id": "worker-1", "instance_id": "REPLACE_WORKER_INSTANCE_OCID", "private_ip": "REPLACE_WORKER_PRIVATE_IP", "secret_id": "REPLACE_WORKER_SECRET_OCID"}
+]

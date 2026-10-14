@@ -1,0 +1,34 @@
+{
+  "schema_version": "migration-installation/v1",
+  "deployment_name": "migration-eval",
+  "source": {
+    "account_id": "REPLACE_AWS_ACCOUNT_ID",
+    "region": "us-east-1",
+    "bucket": "REPLACE_SOURCE_BUCKET",
+    "prefix": "fixtures/"
+  },
+  "destination": {
+    "tenancy_ocid": "REPLACE_TENANCY_OCID",
+    "compartment_ocid": "REPLACE_COMPARTMENT_OCID",
+    "region": "us-ashburn-1",
+    "namespace": "REPLACE_NAMESPACE",
+    "bucket": "REPLACE_DESTINATION_BUCKET",
+    "prefix": "incoming/"
+  },
+  "network": {
+    "vcn_ocid": "REPLACE_VCN_OCID",
+    "subnet_ocid": "REPLACE_PRIVATE_SUBNET_OCID",
+    "admin_cidr": "REPLACE_ADMIN_PUBLIC_IP/32",
+    "payload_route": "internet"
+  },
+  "compute": {
+    "availability_domain": "REPLACE_AVAILABILITY_DOMAIN",
+    "image_ocid": "REPLACE_ORACLE_LINUX_9_X86_IMAGE_OCID",
+    "shape": "VM.Optimized3.Flex",
+    "ocpus": 2,
+    "memory_gib": 16,
+    "initial_workers": 1,
+    "maximum_workers": 1,
+    "ssh_public_key": "REPLACE_OPENSSH_PUBLIC_KEY"
+  }
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prepare an installation | Migration Runner</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="setup.css"><script src="install.js" defer></script></head>
+<body class="setup-page installation-page">
+<header><div><span class="eyebrow">MIGRATION RUNNER / INSTALLATION</span><h1>Prepare an installation</h1><p>Create a package for your OCI and AWS administrators.</p></div><a class="back-link" href="setup.html">Migration planning &rarr;</a></header>
+<main>
+<section class="card"><h2>Understand the source first</h2><p>Discover storage tiers, object sizes and transfer blockers without reading payloads or starting a migration.</p><a href="discovery.html">Open bucket discovery and migration preview &rarr;</a></section>
+<div class="preview-banner"><span class="badge">Infrastructure foundation</span><p>This release prepares private hosts and AWS read access. Application installation and credential enrollment are still being built. Downloading a package creates no cloud resources and does not change the running migration environment.</p></div>
+<form id="installation-form">
+<section class="card"><h2>1. Identify the installation</h2><div class="grid fields">
+<label>Deployment name<input name="deployment_name" required pattern="[a-z][a-z0-9-]{2,23}" maxlength="24" placeholder="migration-pilot"></label>
+<label id="installation-token-label">Operator token<input id="installation-token" type="password" autocomplete="off" required placeholder="Token for this application"></label>
+</div><p class="field-note" id="installation-access-note">The token authorizes package preparation. It stays in this page's memory and is never included in a download. Do not enter cloud passwords, access keys or private certificates.</p></section>
+<section class="card"><h2>2. AWS source</h2><div class="grid fields">
+<label>AWS account ID<input name="source.account_id" required pattern="[0-9]{12}" maxlength="12" inputmode="numeric"></label>
+<label>AWS region<input name="source.region" required placeholder="us-east-1"></label>
+<label>Existing source bucket<input name="source.bucket" required maxlength="63"></label>
+<label>Approved source prefix<input name="source.prefix" required placeholder="archive/"></label>
+<label>KMS key ARN, if used<input name="source.kms_key_arn" maxlength="256" placeholder="Optional key ARN"></label>
+</div><p class="field-note">Use a dedicated prefix ending in /. The generated AWS template grants read access; it does not create, delete or upload source objects. Your AWS administrator supplies the deployment's public CA certificate in CloudFormation.</p></section>
+<section class="card"><h2>3. OCI destination and network</h2><div class="grid fields">
+<label>Tenancy OCID<input name="destination.tenancy_ocid" required maxlength="256"></label>
+<label>Installation compartment OCID<input name="destination.compartment_ocid" required maxlength="256"></label>
+<label>OCI region<input name="destination.region" required placeholder="us-ashburn-1"></label>
+<label>Object Storage namespace<input name="destination.namespace" required maxlength="128"></label>
+<label>Existing destination bucket<input name="destination.bucket" required maxlength="128"></label>
+<label>Dedicated destination prefix<input name="destination.prefix" required placeholder="migration/"></label>
+<label>Existing VCN OCID<input name="network.vcn_ocid" required maxlength="256"></label>
+<label>Existing private subnet OCID<input name="network.subnet_ocid" required maxlength="256"></label>
+<label>Administrator public IPv4 range<input name="network.admin_cidr" required placeholder="Your address followed by /32"></label>
+<label>Payload route<select name="network.payload_route"><option value="internet">Public internet pilot</option><option value="private">Existing private connection</option></select></label>
+<label>S3 interface endpoint ID<input name="network.s3_endpoint_id" maxlength="40" placeholder="Required for private connections"></label>
+</div><p class="field-note">The stack references your existing network and buckets. Network owners must configure routes, DNS, service access and security lists. A private selection restricts the AWS reader to the specified endpoint; it does not create or verify an interconnect.</p></section>
+<section class="card"><h2>4. Private compute</h2><div class="grid fields">
+<label>Availability domain<input name="compute.availability_domain" required maxlength="100" placeholder="Exact domain name from your tenancy"></label>
+<label>Oracle Linux 9 x86 image OCID<input name="compute.image_ocid" required maxlength="256"></label>
+<label>Worker shape<select name="compute.shape"><option>VM.Standard.E5.Flex</option><option>VM.Standard.E4.Flex</option><option>VM.Optimized3.Flex</option></select></label>
+<label>OCPUs per worker<input name="compute.ocpus" type="number" min="1" max="16" step="1" value="2" required></label>
+<label>Memory per worker (GiB)<input name="compute.memory_gib" type="number" min="8" max="256" step="1" value="16" required></label>
+<label>Initial workers<input name="compute.initial_workers" type="number" min="1" max="4" step="1" value="2" required></label>
+<label>Maximum workers<input name="compute.maximum_workers" type="number" min="1" max="4" step="1" value="4" required></label>
+<label>SSH public key<input name="compute.ssh_public_key" required maxlength="4096" placeholder="ssh-ed25519 ... or ssh-rsa ..."></label>
+</div><p class="field-note">The coordinator adds one E5 instance with 2 OCPUs and 16 GiB. This release supports x86 workers; Ampere packaging is pending. Maximum workers is a configuration boundary, not an automatic scaler or spending cap.</p></section>
+<section class="card" id="connection-section"><h2>5. Test connections</h2>
+<p>Check AWS source reads and OCI destination visibility using the source and destination settings above. Compute and network infrastructure fields are not required for this test.</p>
+<p id="connection-context" class="field-note">Live checks are disabled on this server. Enable them in the local setup assistant with your existing cloud profiles.</p>
+<p class="field-note">This read-only test runs from the setup host with local administrator credentials. It reads at most one byte of source data and writes no cloud objects. Worker access, destination writes and the interconnect require checks from the deployed workers.</p>
+<div class="actions"><button type="button" id="connection-test" disabled>Test connections</button><button type="button" id="connection-download" disabled>Download connection report</button></div>
+<p id="connection-status" role="status" aria-live="polite">Not tested.</p><ul id="connection-checks"></ul>
+</section>
+<section class="card"><h2>6. Validate and download</h2><p>Configuration validation and live connection results are separate. A successful read test does not authorize a migration.</p>
+<div class="actions"><button type="submit" id="installation-validate">Validate configuration</button><button type="button" id="installation-download" disabled>Download installation package</button></div>
+<p id="installation-status" role="status" aria-live="polite"></p><ul id="installation-checks"></ul>
+<p class="muted">The download includes an OCI Resource Manager ZIP, AWS CloudFormation template, configuration profile, checksums and step-by-step instructions. Review the foundation-only scope before provisioning anything.</p>
+</section></form></main></body></html>

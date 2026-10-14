@@ -1,0 +1,15 @@
+.git
+.venv
+.env
+.env.*
+.secrets
+tmp
+**/__pycache__
+*.pem
+*.key
+rclone.conf
+
+**/.terraform
+*.tfplan
+*.tfvars.json
+*.tfstate*

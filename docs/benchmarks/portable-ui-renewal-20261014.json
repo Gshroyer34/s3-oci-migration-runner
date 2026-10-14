@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-14",
+  "release": "portable-installer-preview-2",
+  "ledger_revision": "0007_portable_workers",
+  "live_cloud_changed": false,
+  "checks": [
+    {"suite": "Portable UI/renewal, existing cloud UI and deployment profile tests with local PostgreSQL", "passed": 60, "skipped": 1, "skip_reason": "Root-only ownership test runs separately"},
+    {"suite": "Installer ownership/retry tests in disposable Linux root container", "passed": 29, "deselected": 1, "reason": "Full source archive test runs on Windows"},
+    {"suite": "Offline JavaScript DOM workflow", "assertions_passed": 14},
+    {"suite": "JavaScript syntax", "result": "passed"}
+  ],
+  "real_local_boundaries": ["PostgreSQL schema migration and UI job lifecycle", "Cryptographic certificate verification", "Linux file ownership and installer guards"],
+  "mocked_boundaries": ["OCI certificate issuance and read-back", "Vault enrollment", "systemd/Podman service activation", "Browser DOM elements and network responses"],
+  "browser_visual_check": "Blocked: embedded browser runtime failed during initialization with local sandbox helper error",
+  "not_qualified": ["Fresh OCI host installation", "Real managed CA issuance and IAM", "AWS Roles Anywhere exchange with managed issuer", "Live portable dispatch and renewal/reboot", "Rendered browser layout", "Production-scale migration"],
+  "remaining_operations": ["Administrator issuer setup", "Manual CA rollover", "Certificate and secret version retention", "External alerting"]
+}

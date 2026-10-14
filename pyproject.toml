@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling==1.32.0", "editables==0.6"]
+build-backend = "hatchling.build"
+
+[project]
+name = "s3-oci-migration-runner"
+version = "0.5.0"
+description = "Local scaffold for a PostgreSQL-backed S3-to-OCI migration coordinator"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi==0.141.1",
+  "uvicorn==0.52.4",
+  "SQLAlchemy==2.0.52",
+  "alembic==1.19.2",
+  "psycopg[binary]==3.3.5",
+  "pydantic-settings==2.15.0",
+]
+
+[project.optional-dependencies]
+cloud = ["oci==2.185.2", "boto3==1.43.113"]
+dev = ["pytest==9.1.1", "httpx==0.28.1", "podman-compose==1.6.0"]
+
+[project.scripts]
+migration-worker = "migration_runner.worker.__main__:main"
+migration-plan = "migration_runner.planning.__main__:main"
+migration-install = "migration_runner.installation.__main__:main"
+migration-runtime = "migration_runner.installation.host_cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/migration_runner"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: requires a disposable PostgreSQL database"]
+
+
+

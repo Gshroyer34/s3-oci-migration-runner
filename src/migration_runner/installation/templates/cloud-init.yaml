@@ -1,0 +1,15 @@
+#cloud-config
+# Infrastructure foundation only: no credentials, application, or public listener.
+write_files:
+  - path: /etc/migration/INSTALLATION_STAGE
+    permissions: '0644'
+    content: |
+      foundation_only_runtime_not_installed
+      Complete release installation and workload enrollment before admitting jobs.
+  - path: /etc/ssh/sshd_config.d/60-migration.conf
+    permissions: '0644'
+    content: |
+      PasswordAuthentication no
+      PermitRootLogin no
+runcmd:
+  - [systemctl, restart, sshd]

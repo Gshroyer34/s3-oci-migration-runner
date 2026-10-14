@@ -1,0 +1,10 @@
+{
+  "ui": {"reference_sha256": "REPLACE_REFERENCE_FILE_SHA256", "max_runs": 3},
+  "managed_certificates": [
+    {"node_id": "coordinator", "purpose": "tls", "certificate_id": "REPLACE_COORDINATOR_TLS_CERTIFICATE_OCID", "authority_id": "REPLACE_TRANSPORT_CA_OCID"},
+    {"node_id": "coordinator", "purpose": "roles", "certificate_id": "REPLACE_COORDINATOR_ROLES_CERTIFICATE_OCID", "authority_id": "REPLACE_ROLES_CA_OCID"},
+    {"node_id": "coordinator", "purpose": "database", "certificate_id": "REPLACE_COORDINATOR_DATABASE_CERTIFICATE_OCID", "authority_id": "REPLACE_TRANSPORT_CA_OCID"},
+    {"node_id": "worker-1", "purpose": "tls", "certificate_id": "REPLACE_WORKER_TLS_CERTIFICATE_OCID", "authority_id": "REPLACE_TRANSPORT_CA_OCID"},
+    {"node_id": "worker-1", "purpose": "roles", "certificate_id": "REPLACE_WORKER_ROLES_CERTIFICATE_OCID", "authority_id": "REPLACE_ROLES_CA_OCID"}
+  ]
+}

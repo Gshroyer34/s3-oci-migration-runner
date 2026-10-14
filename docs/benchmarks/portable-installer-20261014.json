@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-14",
+  "release": "portable-installer-preview-1",
+  "scope": "Local engineering qualification; no OCI or AWS mutations",
+  "new_tests_unique_passed_across_platforms": 31,
+  "runs": [
+    {"suite": "Final host installer suite on Windows", "passed": 24, "skipped": 6, "skip_reason": "Linux root ownership checks run separately"},
+    {"suite": "Final host installer suite in disposable Oracle Linux root container with no network", "passed": 29, "deselected": 1, "deselection_reason": "Source archive and make-plan test run against complete source tree on Windows"},
+    {"suite": "Real PostgreSQL 17.11 bootstrap rehearsal in disposable networkless container", "passed": 1},
+    {"suite": "Earlier combined setup, deployment-profile and initial host installer regression", "passed": 82, "skipped": 9, "note": "Includes 18 initial host tests; final expanded host suite reported separately"}
+  ],
+  "additional_checks": [
+    "Python compilation",
+    "Bootstrap shell syntax checked with bash",
+    "Deterministic allowlisted source archive and complete member SHA-256 verification",
+    "Source archive excludes credentials, local cloud state and Terraform provider binaries"
+  ],
+  "real_checks": [
+    "Certificate generation, signatures, private key matching, identity, purpose, pinned authorities and expiration rejection",
+    "Linux root ownership, file permissions, symlink rejection and credential materialization into disposable runtime paths",
+    "PostgreSQL transaction rollback across schema, roles, authentication hash and deployment marker",
+    "PostgreSQL least-privilege grants and replay preserving the original ledger metadata"
+  ],
+  "simulated_boundaries": [
+    "OCI instance metadata and private address responses",
+    "Vault reads, ETag-conditional updates, version checks, concurrent-change failure and read-back",
+    "Host systemd and Podman lifecycle calls in installer orchestration tests"
+  ],
+  "not_performed": [
+    "Fresh OCI provisioning or actual IAM application",
+    "Fresh-host systemd startup, OS package bootstrap and reboot",
+    "New AWS reader stack deployment or customer bucket access",
+    "New live migration or interconnect qualification",
+    "Portable operator UI, unattended certificate signing, CA rollover or production scaling"
+  ]
+}

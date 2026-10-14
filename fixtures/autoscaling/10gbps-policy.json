@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "policy_version": 1,
+  "mode": "shadow",
+  "path_id": "example-path",
+  "capacity_bytes_per_second": 1250000000.0,
+  "migration_cap_bytes_per_second": 1062500000.0,
+  "headroom_fraction": 0.15,
+  "min_active_nodes": 1,
+  "initial_nodes": 2,
+  "max_nodes": 8,
+  "object_slots_per_node": 4,
+  "batch_slots_per_node": 1,
+  "source_read_amplification": 3.0,
+  "safe_fallback_bytes_per_second": 0.0,
+  "worker_cost_per_hour": 1.0,
+  "worker_budget_per_hour": 8.0,
+  "worker_budget_remaining": 100.0,
+  "cost_horizon_seconds": 900.0,
+  "startup_p95_seconds": 120.0,
+  "target_batch_seconds": 180.0
+}

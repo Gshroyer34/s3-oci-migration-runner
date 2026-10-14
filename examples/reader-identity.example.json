@@ -1,0 +1,5 @@
+{
+  "role_arn": "REPLACE_ReaderRoleArn",
+  "trust_anchor_arn": "REPLACE_TrustAnchorArn",
+  "profile_arn": "REPLACE_ReaderProfileArn"
+}

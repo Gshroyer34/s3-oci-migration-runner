@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bucket discovery | Migration Runner</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="setup.css"><script src="discovery.js" defer></script></head>
+<body class="setup-page installation-page">
+<header><div><span class="eyebrow">MIGRATION RUNNER / DISCOVERY</span><h1>Understand your source bucket</h1><p>Review what to migrate first, what to leave in place, and what needs attention.</p></div><a class="back-link" href="install.html">Installation setup &rarr;</a></header>
+<main>
+<section class="card"><span class="badge">Read-only preview</span><p id="discovery-context">Checking discovery availability…</p><p>No objects are copied, restored or deleted. Discovery lists current objects and optionally checks a limited number of Standard objects' metadata. API request charges may apply.</p></section>
+<form id="discovery-form" class="card"><h2>1. Select the source</h2><div class="grid fields">
+<label>AWS account ID<input name="account_id" required pattern="[0-9]{12}" maxlength="12"></label>
+<label>AWS region<input name="region" required placeholder="us-east-1"></label>
+<label>Source bucket<input name="bucket" required maxlength="63"></label>
+<label>Discovery scope<select name="scope"><option value="prefix">One prefix</option><option value="bucket">Entire bucket — read-only discovery</option></select></label>
+<label>Source prefix<input name="prefix" required placeholder="archive/"></label>
+<label>Maximum objects to inspect<input name="object_limit" type="number" min="1" max="1000000" step="1" value="10000" required></label>
+<label>Standard metadata samples<input name="metadata_samples" type="number" min="0" max="100" step="1" value="20" required></label>
+</div><p class="field-note">Start with Standard. Glacier Instant Retrieval appears as a later phase; Deep Archive stays excluded. Whole-bucket discovery does not enable whole-bucket copying. Metadata checks cover up to five Standard objects per page within the sample budget, not a representative sample.</p>
+<button id="discovery-start" type="submit" disabled>Create preview and scan</button></form>
+<section class="card"><h2>2. Continue a saved preview</h2><div class="actions"><select id="discovery-recent" aria-label="Saved previews"><option value="">Choose a saved preview</option></select><button id="discovery-open" type="button">Open preview</button><button id="discovery-continue" type="button" disabled>Scan next pages</button><button id="discovery-pause" type="button" disabled>Pause after this page</button><button id="discovery-download" type="button" disabled>Download report</button></div><p class="field-note">Each click scans up to ten pages, within your object limit. Progress is saved after every page. A scan at its limit is partial; increase the limit in a new preview if needed.</p><p id="discovery-status" role="status" aria-live="polite">No preview selected.</p></section>
+<section id="discovery-results" hidden>
+<section class="card"><h2>3. Migration preview</h2><p id="discovery-scope"></p><div class="grid metrics"><div><span>Objects observed</span><strong id="discovery-count"></strong></div><div><span>Data observed</span><strong id="discovery-bytes"></strong></div></div><p id="discovery-coverage"></p><p><strong>Preview only:</strong> no transfer plan is activated. Selected objects still need full property, permission, destination and network checks.</p></section>
+<section class="card"><h2>Migration phases</h2><table><thead><tr><th>Phase</th><th>Objects</th><th>Data</th></tr></thead><tbody id="discovery-phases"></tbody></table></section>
+<div class="grid"><section class="card"><h2>Storage tiers</h2><table><thead><tr><th>Tier</th><th>Objects</th><th>Data</th></tr></thead><tbody id="discovery-tiers"></tbody></table></section><section class="card"><h2>Object sizes</h2><table><thead><tr><th>Size range</th><th>Objects</th><th>Data</th></tr></thead><tbody id="discovery-sizes"></tbody></table></section></div>
+<section class="card"><h2>Standard phase: known blockers</h2><ul id="discovery-blockers"></ul><p>Counts can overlap. Zero observed blockers does not establish migration readiness.</p><ul id="discovery-examples"></ul><p class="field-note">At most 20 example keys are shown. Treat downloaded reports and saved checkpoints as private source information.</p><h3>Metadata coverage</h3><table><thead><tr><th>Observation</th><th>Objects</th><th>Data</th></tr></thead><tbody id="discovery-metadata"></tbody></table></section>
+<section class="card"><h2>What this preview does and does not establish</h2><ul id="discovery-limitations"></ul></section>
+</section></main></body></html>
